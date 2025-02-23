@@ -6,7 +6,7 @@ header("Content-Type: application/json; charset=UTF-8");
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "profile";
+$dbname = "integrative1";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -16,14 +16,14 @@ if ($conn->connect_error) {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!empty($data["firstname"]) && !empty($data["lastname"]) && !empty($data["age"]) && !empty($data["address"]) && !empty($data["sex"])) {
-    $firstname = $conn->real_escape_string($data["firstname"]);
-    $lastname = $conn->real_escape_string($data["lastname"]);
+if (!empty($data["name"]) && !empty($data["email"]) && !empty($data["age"]) && !empty($data["gender"]) && !empty($data["phone_number"])) {
+    $name = $conn->real_escape_string($data["name"]);
+    $email = $conn->real_escape_string($data["email"]);
     $age = $conn->real_escape_string($data["age"]);
-    $sex = $conn->real_escape_string($data["sex"]);
-    $address = $conn->real_escape_string($data["address"]);
+    $gender = $conn->real_escape_string($data["gender"]);
+    $phone_number = $conn->real_escape_string($data["phone_number"]);
 
-    $sql = "INSERT INTO profile (firstname, lastname, age, sex, address) VALUES ('$firstname', '$lastname', '$age', '$sex', '$address')";
+    $sql = "INSERT INTO client (name, email, age, gender, phone_number) VALUES ('$name', '$email', '$age', '$gender', '$phone_number')";
 
     if ($conn->query($sql) === TRUE) {
         echo json_encode(["status" => "success", "message" => "sensor data added successfully"]);
